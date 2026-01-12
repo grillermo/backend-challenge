@@ -1,0 +1,24 @@
+%h1
+  All Members
+
+
+%table
+  %tbody
+    %tr
+      %td Name:
+      %td Personal website:
+      %td Friends count:
+      %td 
+    - @members.each do |member|
+      - if current_member != member
+        %tr
+          %td= link_to member.name, member_path(member)
+          %td= member.shortened_personal_website_url
+          %td= member.friendships.count
+          %td
+            - if current_member.friends.include?(member)
+              %p
+                Your friend!
+            - else
+              = render partial: 'members/add_friend_form', locals: {member: member, current_member: current_member}
+
